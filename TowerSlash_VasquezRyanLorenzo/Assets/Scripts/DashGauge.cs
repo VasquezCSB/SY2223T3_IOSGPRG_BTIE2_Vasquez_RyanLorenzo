@@ -7,22 +7,18 @@ using UnityEngine.UI;
 
 public class DashGauge : MonoBehaviour
 {
-    public int dashMeter;
-    private int dashMeterFull = 100;//100
-    public TMP_Text DP;
-    public Button dashButton;
-    public GameObject autoDeath;
+    public float dashMeter;
+    private float dashMeterFull = 100;//100
 
-    // Update is called once per frame
-    private void Start()
-    {
-        DP.text = "DP: " + dashMeter;
-    }
+    public Button dashButton;
+    public Image dashBar;
+
+    public GameObject autoDeath;
 
     public void AddDashMeter()
     {
         dashMeter += 5;
-        DP.text = "DP: " + dashMeter;
+        dashBar.fillAmount = dashMeter / 100f;
         
         if(dashMeter == dashMeterFull)
         {
@@ -32,7 +28,6 @@ public class DashGauge : MonoBehaviour
 
     public void OnDash()
     {
-        DP.text = "DP: " + dashMeter;
         StartCoroutine(BoostCount());
     }
 
@@ -41,9 +36,11 @@ public class DashGauge : MonoBehaviour
     IEnumerator BoostCount()
     {
         dashMeter = 0;
-        dashButton.gameObject.SetActive(false);
 
+        dashBar.fillAmount = 0;
+        dashButton.gameObject.SetActive(false);
         autoDeath.gameObject.SetActive(true);
+
         //Makes things faster
         Time.timeScale = 2.0f;   
         yield return new WaitForSeconds(7);

@@ -19,12 +19,17 @@ public class GameOverScreen : MonoBehaviour
     public void RestartButton()
     {
         SpawnerManager.Instance.DeleteEnemies();
+
         player.SetActive(true);
         player.GetComponent<Player>().health = 3;
+
         dashGauge.dashMeter = 0;
+        dashGauge.dashBar.fillAmount = 0;
         coroutine.gameObject.SetActive(true);
+
         coroutine.GetComponent<SpawnManager>().StartSpawn();
         player.GetComponent<Player>().healthCount.text = "HP: " + player.GetComponent<Player>().health;
+
         Canvas.SetActive(false);
 
 
